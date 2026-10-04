@@ -14,6 +14,9 @@ Run `./script/build_and_run.sh` to build and launch the full app, or use the
 Codex Run action. Add `--verify` for a process-launch check, `--debug` for LLDB,
 or `--logs` for unified logging. Build products are in `build/Build/Products`.
 The login helper is embedded by Xcode in both ordinary builds and archives.
+Run `./script/test.sh` for isolated Finder menu/scope and shortcut-registration
+regression checks. These exercise the production Swift classes with temporary
+preferences; they do not enable the extension or replace interactive Finder tests.
 
 The main app and Finder extension share the macOS app group
 `7B7LC48KU7.com.justinwme.OpenInTerminal`. This team-prefixed group uses the signing

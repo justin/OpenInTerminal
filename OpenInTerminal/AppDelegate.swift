@@ -305,13 +305,14 @@ extension AppDelegate {
         guard shouldRegister != areShortcutsRegistered else { return }
         
         if shouldRegister {
-            if let action = terminalShortcutAction, action.shortcut != nil { GlobalShortcutMonitor.shared.addAction(action, forKeyEvent: .down) }
-            if let action = editorShortcutAction, action.shortcut != nil { GlobalShortcutMonitor.shared.addAction(action, forKeyEvent: .down) }
-            if let action = copyPathShortcutAction, action.shortcut != nil { GlobalShortcutMonitor.shared.addAction(action, forKeyEvent: .down) }
+            // The monitor observes shortcut changes, including assignments after launch.
+            if let action = terminalShortcutAction { GlobalShortcutMonitor.shared.addAction(action, forKeyEvent: .down) }
+            if let action = editorShortcutAction { GlobalShortcutMonitor.shared.addAction(action, forKeyEvent: .down) }
+            if let action = copyPathShortcutAction { GlobalShortcutMonitor.shared.addAction(action, forKeyEvent: .down) }
         } else {
-            if let action = terminalShortcutAction, action.shortcut != nil { GlobalShortcutMonitor.shared.removeAction(action, forKeyEvent: .down) }
-            if let action = editorShortcutAction, action.shortcut != nil { GlobalShortcutMonitor.shared.removeAction(action, forKeyEvent: .down) }
-            if let action = copyPathShortcutAction, action.shortcut != nil { GlobalShortcutMonitor.shared.removeAction(action, forKeyEvent: .down) }
+            if let action = terminalShortcutAction { GlobalShortcutMonitor.shared.removeAction(action, forKeyEvent: .down) }
+            if let action = editorShortcutAction { GlobalShortcutMonitor.shared.removeAction(action, forKeyEvent: .down) }
+            if let action = copyPathShortcutAction { GlobalShortcutMonitor.shared.removeAction(action, forKeyEvent: .down) }
         }
         
         areShortcutsRegistered = shouldRegister

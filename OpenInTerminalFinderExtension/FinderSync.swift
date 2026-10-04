@@ -16,9 +16,8 @@ class FinderSync: FIFinderSync {
     override init() {
         super.init()
         let finderSync = FIFinderSyncController.default()
-        if let mountedVolumes = FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: nil, options: [.skipHiddenVolumes]) {
-            finderSync.directoryURLs = Set<URL>(mountedVolumes)
-        }
+        let mountedVolumes = FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: nil, options: [.skipHiddenVolumes])
+        finderSync.directoryURLs = Self.monitoredDirectories(including: mountedVolumes)
         // Monitor volumes
         let notificationCenter = NSWorkspace.shared.notificationCenter
         notificationCenter.addObserver(forName: NSWorkspace.didMountNotification, object: nil, queue: .main) { notification in
@@ -26,6 +25,11 @@ class FinderSync: FIFinderSync {
                 finderSync.directoryURLs.insert(volumeURL)
             }
         }
+    }
+
+    static func monitoredDirectories(including mountedVolumes: [URL]?) -> Set<URL> {
+        // Keep the startup filesystem in scope even when volume discovery omits it.
+        return Set(mountedVolumes ?? []).union([URL(fileURLWithPath: "/", isDirectory: true)])
     }
 
     override var toolbarItemName: String {
@@ -124,23 +128,25 @@ class FinderSync: FIFinderSync {
         // menu that will be attached under a single top level item
         let itemsMenu = useSubmenu ? NSMenu(title: "") : menu
 
-        guard let terminal = DefaultsManager.shared.defaultTerminal else { return menu }
-        let terminalTitle = terminal.name
-        let openInTerminalItem = NSMenuItem(title: terminalTitle,
-                                            action: #selector(openDefaultTerminal),
-                                            keyEquivalent: "")
-        let terminalIcon = DefaultsManager.shared.getAppIcon(terminal)
-        openInTerminalItem.image = terminalIcon
-        itemsMenu.addItem(openInTerminalItem)
+        if let terminal = DefaultsManager.shared.defaultTerminal {
+            let terminalTitle = terminal.name
+            let openInTerminalItem = NSMenuItem(title: terminalTitle,
+                                                action: #selector(openDefaultTerminal),
+                                                keyEquivalent: "")
+            let terminalIcon = DefaultsManager.shared.getAppIcon(terminal)
+            openInTerminalItem.image = terminalIcon
+            itemsMenu.addItem(openInTerminalItem)
+        }
 
-        guard let editor = DefaultsManager.shared.defaultEditor else { return menu }
-        let editorTitle = editor.name
-        let openInEditorItem = NSMenuItem(title: editorTitle,
-                                            action: #selector(openDefaultEditor),
-                                            keyEquivalent: "")
-        let editorIcon = DefaultsManager.shared.getAppIcon(editor)
-        openInEditorItem.image = editorIcon
-        itemsMenu.addItem(openInEditorItem)
+        if let editor = DefaultsManager.shared.defaultEditor {
+            let editorTitle = editor.name
+            let openInEditorItem = NSMenuItem(title: editorTitle,
+                                                action: #selector(openDefaultEditor),
+                                                keyEquivalent: "")
+            let editorIcon = DefaultsManager.shared.getAppIcon(editor)
+            openInEditorItem.image = editorIcon
+            itemsMenu.addItem(openInEditorItem)
+        }
 
         // add "Copy Path"
         itemsMenu.addItem(self.copyPathItem)
@@ -157,9 +163,7 @@ class FinderSync: FIFinderSync {
         let menu = NSMenu(title: "")
 
         // get saved custom apps
-        guard let customApps = DefaultsManager.shared.customMenuOptions else {
-            return menu
-        }
+        let customApps = DefaultsManager.shared.customMenuOptions ?? []
 
         // when submenu grouping is enabled, add the items into a separate
         // menu that will be attached under a single top level item
