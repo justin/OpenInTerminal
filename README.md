@@ -3,6 +3,33 @@
   <a href="./README.md">English</a> | <a href="./Resources/README-zh.md">中文</a> | <a href="./Resources/README-tr.md">Türkçe</a> | <a href="./Resources/README-de.md">Deutsch</a>
 </div>
 
+## Building this fork
+
+This fork supports macOS 13 and later and builds with Xcode 27. Open
+`OpenInTerminal.xcworkspace` to access the full app and both Lite apps.
+All targets use automatic Apple Development signing with Justin Williams's team
+`7B7LC48KU7`, and bundle IDs start with `com.justinwme`.
+
+Run `./script/build_and_run.sh` to build and launch the full app, or use the
+Codex Run action. Add `--verify` for a process-launch check, `--debug` for LLDB,
+or `--logs` for unified logging. Build products are in `build/Build/Products`.
+The login helper is embedded by Xcode in both ordinary builds and archives.
+
+The main app and Finder extension share the macOS app group
+`7B7LC48KU7.com.justinwme.OpenInTerminal`. This team-prefixed group uses the signing
+certificate to authorize access and does not require a provisioning profile.
+The fork has separate preferences, AppleScript folders, and Automation permissions
+from upstream; existing upstream settings are not migrated. Enable this fork's
+Finder extension in System Settings and grant Automation access when prompted.
+Launch at Login reflects the system's registration state and may require approval
+in System Settings.
+
+For Developer ID distribution, use `./build-signed.sh` after configuring the
+notary credentials described in that script. `SKIP_NOTARIZE=1 ./build-signed.sh`
+exports signed builds without submitting them to Apple. Ad-hoc builds from
+`build-unsigned.sh` cannot authorize the team-prefixed shared app group; use a
+properly signed build for the full app and Finder extension.
+
 ## How to use 🚀
 
 | Core Features | OpenInTerminal |

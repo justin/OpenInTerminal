@@ -12,7 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
-        let mainAppIdentifier = "wang.jianing.OpenInTerminal"
+        let mainAppIdentifier = "com.justinwme.OpenInTerminal"
         let running = NSWorkspace.shared.runningApplications
         var alreadyRunning = false
         
@@ -29,16 +29,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                        notification: .terminateApp,
                                        object: mainAppIdentifier)
             
-            let path = Bundle.main.bundlePath as NSString
-            var components = path.pathComponents
-            components.removeLast()
-            components.removeLast()
-            components.removeLast()
-            components.append("MacOS")
-            components.append("OpenInTerminal")
-            
-            let newPath = NSString.path(withComponents: components)
-            NSWorkspace.shared.launchApplication(newPath)
+            let appURL = Bundle.main.bundleURL
+                .deletingLastPathComponent()
+                .deletingLastPathComponent()
+                .deletingLastPathComponent()
+                .deletingLastPathComponent()
+            NSWorkspace.shared.openApplication(at: appURL, configuration: .init()) { _, error in
+                if let error = error {
+                    NSLog("Unable to launch OpenInTerminal: %@", error.localizedDescription)
+                }
+                DispatchQueue.main.async {
+                    NSApp.terminate(nil)
+                }
+            }
         } else {
             NSApp.terminate(self)
         }

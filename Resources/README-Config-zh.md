@@ -49,7 +49,7 @@ $ pluginkit -mAD -p com.apple.FinderSync -vvv
 会看到类似以下的输出：
 
 ```
-wang.jianing.app.OpenInTerminal.OpenInTerminalFinderExtension(2.3.5)
+com.justinwme.OpenInTerminal.OpenInTerminalFinderExtension(2.3.5)
            Path = /Applications/OpenInTerminal.app/Contents/PlugIns/OpenInTerminalFinderExtension.appex
            UUID = F2547F13-4E43-4E88-9D8F-56DF05C020D8
       Timestamp = 2024-09-17 09:34:07 +0000
@@ -90,7 +90,7 @@ $ pluginkit -e "use" -u "F2547F13-4E43-4E88-9D8F-56DF05C020D8"
 如果您在 OpenInTerminal 中选择 Neovim 作为编辑器，应用将使用 Kitty 作为默认终端。要切换到其他终端（支持的选项包括 Alacritty、WezTerm 和 Kitty），请使用以下命令更新配置。将 `<Your Name>` 替换为您的用户名，并根据您的安装调整 Neovim 路径（此示例为 `/opt/homebrew/bin/nvim`）：
 
 ```
-defaults write /Users/<Your Name>/Library/Group\ Containers/group.wang.jianing.app.OpenInTerminal/Library/Preferences/group.wang.jianing.app.OpenInTerminal.plist NeovimCommand "open -na wezterm --args start /opt/homebrew/bin/nvim PATH"
+defaults write /Users/<Your Name>/Library/Group\ Containers/7B7LC48KU7.com.justinwme.OpenInTerminal/Library/Preferences/7B7LC48KU7.com.justinwme.OpenInTerminal.plist NeovimCommand "open -na wezterm --args start /opt/homebrew/bin/nvim PATH"
 ```
 
 其他终端配置：
@@ -115,14 +115,14 @@ open -na kitty --args --single-instance --instance-group 1 --directory
 如果您想自定义此行为，可以在终端中运行以下命令。请确保将 <Your Name> 替换为您的用户名，并根据需要调整命令：
 
 ```
-defaults write /Users/<Your Name>/Library/Group\ Containers/group.wang.jianing.app.OpenInTerminal/Library/Preferences/group.wang.jianing.app.OpenInTerminal.plist KittyCommand "open -na kitty --args --single-instance --instance-group 1 --directory"
+defaults write /Users/<Your Name>/Library/Group\ Containers/7B7LC48KU7.com.justinwme.OpenInTerminal/Library/Preferences/7B7LC48KU7.com.justinwme.OpenInTerminal.plist KittyCommand "open -na kitty --args --single-instance --instance-group 1 --directory"
 ```
 
 ## 常见问题 ❓
 
 <details><summary>我不小心点了不授权的按钮</summary><br>
 <p>你可以运行以下命令。这会重置系统设置里的权限。</p>
-<pre><code>tccutil reset AppleEvents wang.jianing.app.OpenInTerminal</code></pre>
+<pre><code>tccutil reset AppleEvents com.justinwme.OpenInTerminal</code></pre>
 </details>
 
 <details><summary>路径里的特殊字符</summary><br>

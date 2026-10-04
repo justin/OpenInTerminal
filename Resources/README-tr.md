@@ -84,7 +84,7 @@ Desteğiniz için teşekkürler!
 
 <details><summary>2. Yanlışlıkla <code>Kabul Etme</code>  butonuna tıkladım.</summary><br>
 <p>Aşağıda verilen kodu terminalde çalıştırın. Bu sayede Sistem Tercihlerindeki uygulamaya dair izinler sıfırlanacaktır.</p>
-<br><code>tccutil reset AppleEvents wang.jianing.app.OpenInTerminal</code><br>
+<br><code>tccutil reset AppleEvents com.justinwme.OpenInTerminal</code><br>
 </details>
 
 <details><summary>3. <code>path</code>'de özel karakterler var.</summary><br>

@@ -5,8 +5,9 @@
 #
 # Strategy: build each app with signing turned off (so Xcode never demands a
 # provisioning profile for the app-groups / sandbox capabilities), then re-sign
-# the finished bundles ad-hoc ("Sign to Run Locally"). Ad-hoc signing is enough
-# for the apps to launch and for the Finder extension to be enabled locally.
+# the finished bundles ad-hoc ("Sign to Run Locally"). This is suitable for
+# compilation checks and the Lite apps. The full app and Finder extension need
+# team signing to authorize access to their shared app group.
 #
 # For the full OpenInTerminal app the login-item helper is embedded into
 # Contents/Library/LoginItems and signed too, so "Launch at Login" works.
@@ -21,7 +22,7 @@ DERIVED="build"
 EXPORT_DIR="export"
 PRODUCTS="$DERIVED/Build/Products/$CONFIG"
 EXT_ENT="OpenInTerminalFinderExtension/OpenInTerminalFinderExtension.entitlements"
-HELPER="OpenInTerminalHelper.app"
+HELPER_ENT="OpenInTerminalHelper/OpenInTerminalHelper.entitlements"
 
 # scheme:app-entitlements pairs
 TARGETS=(
@@ -44,9 +45,9 @@ adhoc_sign() {  # $1 = .app bundle, $2 = app entitlements
   find "$app" -type d -name "*.appex" -print0 | while IFS= read -r -d '' ext; do
     codesign --force --sign - --entitlements "$EXT_ENT" "$ext"
   done
-  # nested apps (e.g. the login-item helper); signed plain ad-hoc
+  # nested apps (e.g. the login-item helper)
   find "$app" -mindepth 1 -type d -name "*.app" -print0 | while IFS= read -r -d '' sub; do
-    codesign --force --sign - "$sub"
+    codesign --force --sign - --entitlements "$HELPER_ENT" "$sub"
   done
   codesign --force --sign - --entitlements "$ent" "$app"
 }
@@ -68,18 +69,6 @@ for pair in "${TARGETS[@]}"; do
     build >/dev/null
 
   app="$PRODUCTS/$scheme.app"
-
-  # Embed the login-item helper into the full app so "Launch at Login" works.
-  if [[ "$scheme" == "OpenInTerminal" ]]; then
-    if [[ -d "$PRODUCTS/$HELPER" ]]; then
-      echo "==> Embedding $HELPER into LoginItems"
-      mkdir -p "$app/Contents/Library/LoginItems"
-      rm -rf "$app/Contents/Library/LoginItems/$HELPER"
-      cp -R "$PRODUCTS/$HELPER" "$app/Contents/Library/LoginItems/"
-    else
-      echo "!! $HELPER not found in products; Launch-at-Login will be unavailable"
-    fi
-  fi
 
   echo "==> Ad-hoc signing $scheme.app"
   adhoc_sign "$app" "$ent"

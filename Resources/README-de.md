@@ -84,7 +84,7 @@ Danke für Ihre Unterstützung!
 
 <details><summary>2. Ich habe versehentlich auf <code>Nicht erlauben</code> geklickt.</summary><br>
 <p>Sie können den folgenden Befehl in einem Terminal ausführen. Dadurch werden die Berechtigungen in den Systemeinstellungen zurückgesetzt.</p>
-<br><code>tccutil reset AppleEvents wang.jianing.app.OpenInTerminal</code><br>
+<br><code>tccutil reset AppleEvents com.justinwme.OpenInTerminal</code><br>
 </details>
 
 <details><summary>3. Sonderzeichen im <code>Pfad</code>.</summary><br>

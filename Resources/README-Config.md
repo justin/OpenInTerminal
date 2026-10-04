@@ -49,7 +49,7 @@ $ pluginkit -mAD -p com.apple.FinderSync -vvv
 You should see output similar to the following:
 
 ```
-wang.jianing.app.OpenInTerminal.OpenInTerminalFinderExtension(2.3.5)
+com.justinwme.OpenInTerminal.OpenInTerminalFinderExtension(2.3.5)
            Path = /Applications/OpenInTerminal.app/Contents/PlugIns/OpenInTerminalFinderExtension.appex
            UUID = F2547F13-4E43-4E88-9D8F-56DF05C020D8
       Timestamp = 2024-09-17 09:34:07 +0000
@@ -90,7 +90,7 @@ For macOS 14 and earlier, ensure the Finder Extension is enabled via System Pref
 If you select Neovim as your editor in OpenInTerminal, the app will use Kitty as the default terminal. To switch to a different terminal (supported options: Alacritty, WezTerm, and Kitty), update the configuration with the following command. Replace `<Your Name>` with your username and adjust the Neovim path (`/opt/homebrew/bin/nvim` in this example) to match your installation:
 
 ```
-defaults write /Users/<Your Name>/Library/Group\ Containers/group.wang.jianing.app.OpenInTerminal/Library/Preferences/group.wang.jianing.app.OpenInTerminal.plist NeovimCommand "open -na wezterm --args start /opt/homebrew/bin/nvim PATH"
+defaults write /Users/<Your Name>/Library/Group\ Containers/7B7LC48KU7.com.justinwme.OpenInTerminal/Library/Preferences/7B7LC48KU7.com.justinwme.OpenInTerminal.plist NeovimCommand "open -na wezterm --args start /opt/homebrew/bin/nvim PATH"
 ```
 
 Other terminal configurations:
@@ -115,14 +115,14 @@ open -na kitty --args --single-instance --instance-group 1 --directory
 If you want to customize this behavior, you can run the following command in your terminal. Make sure to replace `<Your Name>` with your username and adjust the open command as what you want:
 
 ```
-defaults write /Users/<Your Name>/Library/Group\ Containers/group.wang.jianing.app.OpenInTerminal/Library/Preferences/group.wang.jianing.app.OpenInTerminal.plist KittyCommand "open -na kitty --args --single-instance --instance-group 1 --directory"
+defaults write /Users/<Your Name>/Library/Group\ Containers/7B7LC48KU7.com.justinwme.OpenInTerminal/Library/Preferences/7B7LC48KU7.com.justinwme.OpenInTerminal.plist KittyCommand "open -na kitty --args --single-instance --instance-group 1 --directory"
 ```
 
 ## FAQ ❓
 
 <details><summary>Oops, hit <code>Don't Allow</code> button by mistake.</summary><br>
 <p>No sweat! Just run the following command in your terminal, and it'll reset the permissions in System Preferences.</p>
-<br><code>tccutil reset AppleEvents wang.jianing.app.OpenInTerminal</code><br>
+<br><code>tccutil reset AppleEvents com.justinwme.OpenInTerminal</code><br>
 </details>
 
 <details><summary>Special characters in the <code>path</code>.</summary><br>

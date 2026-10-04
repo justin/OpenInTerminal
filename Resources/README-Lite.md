@@ -79,43 +79,43 @@ The selection box will not appear after you have set the default terminal. If yo
 
 ```
 # For OpenInTerminal-Lite:
-defaults remove wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal
+defaults remove com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal
 # For OpenInEditor-Lite:
-defaults remove wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor
+defaults remove com.justinwme.OpenInEditor-Lite LiteDefaultEditor
 ```
 
 Set the following app as the default app to open:
 
 | App | Command |
 | --- | --- |
-| Alacritty | `defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal Alacritty` |
-| cmux | `defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal cmux` |
-| kitty | `defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal kitty` |
-| TextEdit | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor TextEdit` |
-| VSCodium | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor VSCodium` |
-| BBEdit | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor BBEdit` |
-| Visual Studio Code - Insiders | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Visual\ Studio\ Code\ -\ Insiders` |
-| TextMate | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor TextMate` |
-| CotEditor | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor CotEditor` |
-| MacVim | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor MacVim` |
-| Typora | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Typora` |
-| Neovim | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Neovim` |
-| Nova | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Nova` |
-| Cursor | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Cursor` |
-| AppCode | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor AppCode` |
-| CLion | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor CLion` |
-| GoLand | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor GoLand` |
-| IntelliJ IDEA | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor IntelliJ\ IDEA` |
-| PhpStorm | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor PhpStorm` |
-| PyCharm | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor PyCharm` |
-| RubyMine | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor RubyMine` |
-| WebStorm | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor WebStorm` |
-| Android Studio | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Android\ Studio` |
+| Alacritty | `defaults write com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal Alacritty` |
+| cmux | `defaults write com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal cmux` |
+| kitty | `defaults write com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal kitty` |
+| TextEdit | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor TextEdit` |
+| VSCodium | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor VSCodium` |
+| BBEdit | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor BBEdit` |
+| Visual Studio Code - Insiders | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Visual\ Studio\ Code\ -\ Insiders` |
+| TextMate | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor TextMate` |
+| CotEditor | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor CotEditor` |
+| MacVim | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor MacVim` |
+| Typora | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Typora` |
+| Neovim | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Neovim` |
+| Nova | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Nova` |
+| Cursor | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Cursor` |
+| AppCode | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor AppCode` |
+| CLion | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor CLion` |
+| GoLand | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor GoLand` |
+| IntelliJ IDEA | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor IntelliJ\ IDEA` |
+| PhpStorm | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor PhpStorm` |
+| PyCharm | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor PyCharm` |
+| RubyMine | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor RubyMine` |
+| WebStorm | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor WebStorm` |
+| Android Studio | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Android\ Studio` |
 
 In particular, if you want to use a custom application as the default, then you can also use this command. Take `GitHub Desktop` as an example.
 
 ```
-defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal GitHub\ Desktop
+defaults write com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal GitHub\ Desktop
 ```
 
 #### For Neovim Users
@@ -123,7 +123,7 @@ defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal GitHub\ 
 If you select Neovim as your editor, the app will use Kitty as the default terminal. To switch to a different terminal (supported options: Alacritty, WezTerm, and Kitty), update the configuration with the following command. Adjust the Neovim path (`/opt/homebrew/bin/nvim` in this example) to match your installation:
 
 ```
-defaults write wang.jianing.app.OpenInEditor-Lite NeovimCommand "open -na Alacritty --args -e /opt/homebrew/bin/nvim PATH"
+defaults write com.justinwme.OpenInEditor-Lite NeovimCommand "open -na Alacritty --args -e /opt/homebrew/bin/nvim PATH"
 ```
 
 Other terminal configurations:
@@ -148,7 +148,7 @@ open -na kitty --args --single-instance --instance-group 1 --directory
 If you want to customize this behavior, you can run the following command in your terminal. Make sure to replace the open command as what you want:
 
 ```
-defaults write wang.jianing.app.OpenInTerminal-Lite KittyCommand "open -na kitty --args --single-instance --instance-group 1 --directory"
+defaults write com.justinwme.OpenInTerminal-Lite KittyCommand "open -na kitty --args --single-instance --instance-group 1 --directory"
 ```
 
 ### 2) If you are using Dark Mode
@@ -249,9 +249,9 @@ defaults write com.googlecode.iterm2 OpenFileInNewWindows -bool true
 <details><summary>1. Oops, hit <code>Don't Allow</code> button by mistake.</summary><br>
 <p>No sweat! Just run the following command in your terminal, and it'll reset the permissions in System Preferences.</p>
 <pre><code># For OpenInTerminal-Lite:
-tccutil reset AppleEvents wang.jianing.app.OpenInTerminal-Lite
+tccutil reset AppleEvents com.justinwme.OpenInTerminal-Lite
 # For OpenInEditor-Lite:
-tccutil reset AppleEvents wang.jianing.app.OpenInEditor-Lite
+tccutil reset AppleEvents com.justinwme.OpenInEditor-Lite
 </code></pre>
 </details>
 

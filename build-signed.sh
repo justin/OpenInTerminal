@@ -48,7 +48,7 @@ DERIVED="build"
 EXPORT_DIR="export"
 PRODUCTS="$DERIVED/Build/Products/$CONFIG"
 EXT_ENT="OpenInTerminalFinderExtension/OpenInTerminalFinderExtension.entitlements"
-HELPER="OpenInTerminalHelper.app"
+HELPER_ENT="OpenInTerminalHelper/OpenInTerminalHelper.entitlements"
 
 NOTARY_PROFILE="${NOTARY_PROFILE:-OpenInTerminal-notary}"
 SKIP_NOTARIZE="${SKIP_NOTARIZE:-0}"
@@ -104,7 +104,7 @@ sign() {  # $1 = .app bundle, $2 = app entitlements
   done
   # nested apps (e.g. the login-item helper)
   find "$app" -mindepth 1 -type d -name "*.app" -print0 | while IFS= read -r -d '' sub; do
-    codesign "${common[@]}" "$sub"
+    codesign "${common[@]}" --entitlements "$HELPER_ENT" "$sub"
   done
   codesign "${common[@]}" --entitlements "$ent" "$app"
 }
@@ -126,18 +126,6 @@ for pair in "${TARGETS[@]}"; do
     build >/dev/null
 
   app="$PRODUCTS/$scheme.app"
-
-  # Embed the login-item helper into the full app so "Launch at Login" works.
-  if [[ "$scheme" == "OpenInTerminal" ]]; then
-    if [[ -d "$PRODUCTS/$HELPER" ]]; then
-      echo "==> Embedding $HELPER into LoginItems"
-      mkdir -p "$app/Contents/Library/LoginItems"
-      rm -rf "$app/Contents/Library/LoginItems/$HELPER"
-      cp -R "$PRODUCTS/$HELPER" "$app/Contents/Library/LoginItems/"
-    else
-      echo "!! $HELPER not found in products; Launch-at-Login will be unavailable"
-    fi
-  fi
 
   echo "==> Developer-ID signing $scheme.app"
   sign "$app" "$ent"

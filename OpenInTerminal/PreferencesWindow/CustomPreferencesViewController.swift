@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import UniformTypeIdentifiers
 import OpenInTerminalCore
 
 class CustomPreferencesViewController: PreferencesViewController {
@@ -436,7 +437,7 @@ extension CustomPreferencesViewController: NSMenuDelegate {
         openPanel.canChooseDirectories = false
         openPanel.canChooseFiles = true
         openPanel.allowsMultipleSelection = false
-        openPanel.allowedFileTypes = ["app", "App", "APP"]
+        openPanel.allowedContentTypes = [.applicationBundle]
         openPanel.beginSheetModal(for: view.window!, completionHandler: {
             result in
             if result == NSApplication.ModalResponse.OK {

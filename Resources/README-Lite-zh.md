@@ -73,44 +73,44 @@ brew install --cask openineditor-lite
 
 ```
 # 对于 OpenInTerminal-Lite:
-defaults remove wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal
+defaults remove com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal
 # 对于 OpenInEditor-Lite:
-defaults remove wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor
+defaults remove com.justinwme.OpenInEditor-Lite LiteDefaultEditor
 ```
 
 将下列应用设置为默认：
 
 | 应用 | 命令 |
 | --- | --- |
-| Alacritty | `defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal Alacritty` |
-| cmux | `defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal cmux` |
-| kitty | `defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal kitty` |
-| Ghostty | `defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal ghostty` |
-| TextEdit | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor TextEdit` |
-| VSCodium | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor VSCodium` |
-| BBEdit | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor BBEdit` |
-| Visual Studio Code - Insiders | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Visual\ Studio\ Code\ -\ Insiders` |
-| TextMate | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor TextMate` |
-| CotEditor | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor CotEditor` |
-| MacVim | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor MacVim` |
-| Typora | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Typora` |
-| Neovim | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Neovim` |
-| Nova | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Nova` |
-| Cursor | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Cursor` |
-| AppCode | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor AppCode` |
-| CLion | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor CLion` |
-| GoLand | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor GoLand` |
-| IntelliJ IDEA | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor IntelliJ\ IDEA` |
-| PhpStorm | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor PhpStorm` |
-| PyCharm | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor PyCharm` |
-| RubyMine | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor RubyMine` |
-| WebStorm | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor WebStorm` |
-| Android Studio | `defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Android\ Studio` |
+| Alacritty | `defaults write com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal Alacritty` |
+| cmux | `defaults write com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal cmux` |
+| kitty | `defaults write com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal kitty` |
+| Ghostty | `defaults write com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal ghostty` |
+| TextEdit | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor TextEdit` |
+| VSCodium | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor VSCodium` |
+| BBEdit | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor BBEdit` |
+| Visual Studio Code - Insiders | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Visual\ Studio\ Code\ -\ Insiders` |
+| TextMate | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor TextMate` |
+| CotEditor | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor CotEditor` |
+| MacVim | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor MacVim` |
+| Typora | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Typora` |
+| Neovim | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Neovim` |
+| Nova | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Nova` |
+| Cursor | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Cursor` |
+| AppCode | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor AppCode` |
+| CLion | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor CLion` |
+| GoLand | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor GoLand` |
+| IntelliJ IDEA | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor IntelliJ\ IDEA` |
+| PhpStorm | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor PhpStorm` |
+| PyCharm | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor PyCharm` |
+| RubyMine | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor RubyMine` |
+| WebStorm | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor WebStorm` |
+| Android Studio | `defaults write com.justinwme.OpenInEditor-Lite LiteDefaultEditor Android\ Studio` |
 
 如果你想要使用自定义应用，那么你可以下面的命令。以 GitHub Desktop 为例。
 
 ```
-defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal GitHub\ Desktop
+defaults write com.justinwme.OpenInTerminal-Lite LiteDefaultTerminal GitHub\ Desktop
 ```
 
 #### 针对 Neovim 用户
@@ -118,7 +118,7 @@ defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal GitHub\ 
 如果您选择 Neovim 作为编辑器，应用将默认使用 Kitty 作为终端。要切换到其他终端（支持的选项包括 Alacritty、WezTerm 和 Kitty），请使用以下命令更新配置。根据您的安装调整 Neovim 路径（此示例为 /opt/homebrew/bin/nvim）：
 
 ```
-defaults write wang.jianing.app.OpenInEditor-Lite NeovimCommand "open -na Alacritty --args -e /opt/homebrew/bin/nvim PATH"
+defaults write com.justinwme.OpenInEditor-Lite NeovimCommand "open -na Alacritty --args -e /opt/homebrew/bin/nvim PATH"
 ```
 
 其他终端配置：
@@ -143,7 +143,7 @@ open -na kitty --args --single-instance --instance-group 1 --directory
 如果您想自定义此行为，可以在终端中运行以下命令。请根据需要调整 open 命令：
 
 ```
-defaults write wang.jianing.app.OpenInTerminal-Lite KittyCommand "open -na kitty --args --single-instance --instance-group 1 --directory"
+defaults write com.justinwme.OpenInTerminal-Lite KittyCommand "open -na kitty --args --single-instance --instance-group 1 --directory"
 ```
 
 ### 2) 如果你正在使用深色模式 (Dark Mode)
@@ -245,9 +245,9 @@ defaults write com.googlecode.iterm2 OpenFileInNewWindows -bool true
 <details><summary>1. 我不小心点了不授权的按钮</summary><br>
 <p>你可以运行以下命令。这会重置系统设置里的权限。</p>
 <pre><code># 对于 OpenInTerminal-Lite:
-tccutil reset AppleEvents wang.jianing.app.OpenInTerminal-Lite
+tccutil reset AppleEvents com.justinwme.OpenInTerminal-Lite
 # 对于 OpenInEditor-Lite:
-tccutil reset AppleEvents wang.jianing.app.OpenInEditor-Lite
+tccutil reset AppleEvents com.justinwme.OpenInEditor-Lite
 </code></pre>
 </details>
 
