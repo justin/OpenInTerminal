@@ -10,13 +10,28 @@ This fork supports macOS 13 and later and builds with Xcode 27. Open
 All targets use automatic Apple Development signing with Justin Williams's team
 `7B7LC48KU7`, and bundle IDs start with `com.justinwme`.
 
-Run `./script/build_and_run.sh` to build and launch the full app, or use the
+Run `./scripts/build_and_run.sh` to build and launch the full app, or use the
 Codex Run action. Add `--verify` for a process-launch check, `--debug` for LLDB,
 or `--logs` for unified logging. Build products are in `build/Build/Products`.
 The login helper is embedded by Xcode in both ordinary builds and archives.
-Run `./script/test.sh` for isolated Finder menu/scope and shortcut-registration
+Run `./scripts/test.sh` for isolated Finder menu/scope and shortcut-registration
 regression checks. These exercise the production Swift classes with temporary
 preferences; they do not enable the extension or replace interactive Finder tests.
+
+The root `Justfile` provides these shortcuts (run `just` to list them):
+
+| Command | Action |
+| --- | --- |
+| `just build` | Build the full app in Debug configuration |
+| `just build Release OpenInTerminal-Lite` | Build a selected configuration and scheme |
+| `just run` | Build and launch the full app (`just run --verify` checks launch) |
+| `just test` | Build and run the regression checks |
+| `just build-signed` | Export Developer ID-signed apps and ZIPs without notarization |
+| `just build-unsigned` | Export ad-hoc-signed apps |
+| `just notarize` | Build, Developer ID-sign, notarize, and staple all three apps |
+
+All shell entrypoints live under `scripts/` and resolve paths from the repository
+root, including when invoked from another directory.
 
 The main app and Finder extension share the macOS app group
 `7B7LC48KU7.com.justinwme.OpenInTerminal`. This team-prefixed group uses the signing
@@ -27,10 +42,10 @@ Finder extension in System Settings and grant Automation access when prompted.
 Launch at Login reflects the system's registration state and may require approval
 in System Settings.
 
-For Developer ID distribution, use `./build-signed.sh` after configuring the
-notary credentials described in that script. `SKIP_NOTARIZE=1 ./build-signed.sh`
+For Developer ID distribution, use `./scripts/build-signed.sh` after configuring the
+notary credentials described in that script. `SKIP_NOTARIZE=1 ./scripts/build-signed.sh`
 exports signed builds without submitting them to Apple. Ad-hoc builds from
-`build-unsigned.sh` cannot authorize the team-prefixed shared app group; use a
+`scripts/build-unsigned.sh` cannot authorize the team-prefixed shared app group; use a
 properly signed build for the full app and Finder extension.
 
 ## How to use 🚀

@@ -15,14 +15,14 @@ This repo ships three apps. Their releases and casks are grouped as follows:
 
 **Two GitHub releases, not three:** the main app gets its own release; **both Lite apps ride together in the Lite release** (both zips attached to the `vA.B.C` tag). Confirm the version numbers with the user or read them from the changelogs — main app version is in `README.md` (`## Changes`), Lite version is in `Resources/README-Lite.md`.
 
-**Artifacts must be Developer-ID signed AND notarized** (Homebrew rejects anything else — see Step 0). Do not release ad-hoc/`build-unsigned.sh` output to GitHub or Homebrew.
+**Artifacts must be Developer-ID signed AND notarized** (Homebrew rejects anything else — see Step 0). Do not release ad-hoc/`scripts/build-unsigned.sh` output to GitHub or Homebrew.
 
 ## Prerequisites (check first)
 - `gh auth status` is authenticated for `Ji4n1ng/OpenInTerminal`.
 - The Homebrew fork is checked out at `/Users/jianing/GitHub/homebrew-cask` (remote `origin` = `git@github.com:Ji4n1ng/homebrew-cask.git`).
 
 ## Step 0 — Build signed + notarized artifacts
-Run `./build-signed.sh` (repo root). It Developer-ID signs (hardened runtime + timestamp), submits to Apple's notary service, staples, and writes `export/<App>.zip` for all three apps. Needs the `Developer ID Application: Jianing Wang (C8VX3ZLX5U)` cert and the `OpenInTerminal-notary` keychain profile — both already set up; the script auto-detects them and fails fast if missing. (`build-unsigned.sh` is local-testing only — never release its output.)
+Run `./scripts/build-signed.sh` (repo root). It Developer-ID signs (hardened runtime + timestamp), submits to Apple's notary service, staples, and writes `export/<App>.zip` for all three apps. Needs the `Developer ID Application: Jianing Wang (C8VX3ZLX5U)` cert and the `OpenInTerminal-notary` keychain profile — both already set up; the script auto-detects them and fails fast if missing. (`scripts/build-unsigned.sh` is local-testing only — never release its output.)
 
 Verify each built app before releasing:
 ```bash
@@ -133,7 +133,7 @@ git show upstream/main:.github/PULL_REQUEST_TEMPLATE.md
 - Edit the body with `gh pr edit <num> --repo Homebrew/homebrew-cask --body-file ...`; the reopen workflow runs within ~1 min.
 
 ## Known blockers / gotchas
-- **Signing/notarization** — `homebrew/cask` requires every app to be **Developer-ID signed AND notarized**; ad-hoc builds fail `brew audit --cask --online` and CI `test` jobs with *"not signed by a distributor that meets the system Gatekeeper requirements."* This is handled by Step 0 (`build-signed.sh` → notarized artifacts), so it is no longer a blocker as long as you release Step-0 output. If you ever see the Gatekeeper failure, the artifacts are unsigned/ad-hoc — rebuild via Step 0, don't hand-patch. (History: v2.3.9/v1.2.8 first shipped ad-hoc and were rejected in [PR #274726](https://github.com/Homebrew/homebrew-cask/pull/274726); re-uploading notarized builds made CI pass.)
+- **Signing/notarization** — `homebrew/cask` requires every app to be **Developer-ID signed AND notarized**; ad-hoc builds fail `brew audit --cask --online` and CI `test` jobs with *"not signed by a distributor that meets the system Gatekeeper requirements."* This is handled by Step 0 (`scripts/build-signed.sh` → notarized artifacts), so it is no longer a blocker as long as you release Step-0 output. If you ever see the Gatekeeper failure, the artifacts are unsigned/ad-hoc — rebuild via Step 0, don't hand-patch. (History: v2.3.9/v1.2.8 first shipped ad-hoc and were rejected in [PR #274726](https://github.com/Homebrew/homebrew-cask/pull/274726); re-uploading notarized builds made CI pass.)
 - **One cask per PR:** Homebrew prefers a single cask per PR; a three-cask PR gets an `automerge-skip` label and a "must not modify multiple casks" note. Maintainers may ask to split into three. Do the combined PR only if the user explicitly wants one PR.
 - **Cleanup:** the force-tap adds ~560MB; offer `brew untap --force homebrew/cask` when done.
 
