@@ -13,7 +13,7 @@ Open `OpenInTerminal.xcworkspace` for the app and its supporting targets.
 
 ## Build, Test, and Development Commands
 
-Use Xcode 27; the deployment target is macOS 13. Run `just` to list recipes.
+Use Xcode 27; the deployment target is macOS 14. Run `just` to list recipes.
 
 - `just build`: build the full app in Debug.
 - `just build Release`: build the Release configuration.
@@ -27,7 +27,7 @@ Outputs belong in ignored `build/` and `export/` directories.
 
 ## Coding Style & Naming Conventions
 
-Use four-space Swift indentation, `UpperCamelCase` types, and `lowerCamelCase` methods and properties. Match surrounding conventions, including existing constants, import order, and `MARK` sections. Preserve useful comments and macOS 13 compatibility.
+Use four-space Swift indentation, `UpperCamelCase` types, and `lowerCamelCase` methods and properties. Match surrounding conventions, including existing constants, import order, and `MARK` sections. Preserve useful comments and macOS 14 compatibility.
 
 No Swift formatter or linter configuration is checked in. Use `just --fmt --check` for the Justfile, `bash -n` on each changed shell script, and `git diff --check`.
 

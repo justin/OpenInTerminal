@@ -5,7 +5,7 @@
 
 ## Building this fork
 
-This fork supports macOS 13 and later and builds with Xcode 27. Open
+This fork supports macOS 14 and later and builds with Xcode 27. Open
 `OpenInTerminal.xcworkspace` to access the app, shared framework, Finder extension, and login helper.
 All targets use automatic Apple Development signing with Justin Williams's team
 `7B7LC48KU7`, and bundle IDs start with `com.justinwme`.
