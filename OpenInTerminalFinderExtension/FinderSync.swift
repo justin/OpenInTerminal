@@ -43,6 +43,12 @@ class FinderSync: FIFinderSync {
     }
     
     override var toolbarItemImage: NSImage {
+        // Matches the context menu: the color app icon for original icons,
+        // otherwise the monochrome template glyph.
+        if DefaultsManager.shared.customMenuIconOption == .original,
+           let colorIcon = NSImage(named: "context_menu_icon_color_terminal") {
+            return colorIcon
+        }
         return NSImage(named: "Icon")!
     }
     
