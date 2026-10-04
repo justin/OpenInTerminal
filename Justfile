@@ -25,3 +25,8 @@ build-unsigned:
 # Build, sign, submit to Apple for notarization, and staple OpenInTerminal.
 notarize:
     SKIP_NOTARIZE=0 ./scripts/build-signed.sh
+
+# Release X.Y.Z (or vX.Y.Z); use --resume after an interrupted release.
+[positional-arguments]
+release version *options:
+    python3 scripts/release.py "$@"

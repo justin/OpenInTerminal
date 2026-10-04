@@ -118,6 +118,7 @@ xcodebuild \
   -configuration "$CONFIG" \
   -derivedDataPath "$DERIVED" \
   -destination 'generic/platform=macOS' \
+  'ARCHS=arm64 x86_64' ONLY_ACTIVE_ARCH=NO \
   CODE_SIGNING_ALLOWED=NO \
   build >/dev/null
 
