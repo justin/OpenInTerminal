@@ -4,7 +4,7 @@
 
 首次启动时，macOS 可能会拒绝打开应用，例如提示 `“OpenInTerminal”已损坏，无法打开` 或 `无法打开，因为 Apple 无法检查其是否包含恶意软件`。
 
-1. 将应用（`OpenInTerminal.app`、`OpenInTerminal-Lite.app` 或 `OpenInEditor-Lite.app`）移动到 `/Applications` 文件夹。
+1. 将应用（`OpenInTerminal.app`）移动到 `/Applications` 文件夹。
 
 2. 移除 macOS 为下载或拷贝的应用附加的隔离（quarantine）属性（对每个已安装的应用重复执行，并替换名称）：
 

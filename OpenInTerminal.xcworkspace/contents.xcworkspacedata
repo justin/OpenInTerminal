@@ -4,10 +4,4 @@
    <FileRef
       location = "group:OpenInTerminal.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:OpenInTerminal-Lite/OpenInTerminal-Lite.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:OpenInEditor-Lite/OpenInEditor-Lite.xcodeproj">
-   </FileRef>
 </Workspace>

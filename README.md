@@ -6,7 +6,7 @@
 ## Building this fork
 
 This fork supports macOS 13 and later and builds with Xcode 27. Open
-`OpenInTerminal.xcworkspace` to access the full app and both Lite apps.
+`OpenInTerminal.xcworkspace` to access the app, shared framework, Finder extension, and login helper.
 All targets use automatic Apple Development signing with Justin Williams's team
 `7B7LC48KU7`, and bundle IDs start with `com.justinwme`.
 
@@ -23,12 +23,12 @@ The root `Justfile` provides these shortcuts (run `just` to list them):
 | Command | Action |
 | --- | --- |
 | `just build` | Build the full app in Debug configuration |
-| `just build Release OpenInTerminal-Lite` | Build a selected configuration and scheme |
+| `just build Release` | Build the Release configuration |
 | `just run` | Build and launch the full app (`just run --verify` checks launch) |
 | `just test` | Build and run the regression checks |
-| `just build-signed` | Export Developer ID-signed apps and ZIPs without notarization |
-| `just build-unsigned` | Export ad-hoc-signed apps |
-| `just notarize` | Build, Developer ID-sign, notarize, and staple all three apps |
+| `just build-signed` | Export Developer ID-signed app and ZIP without notarization |
+| `just build-unsigned` | Export an ad-hoc-signed app |
+| `just notarize` | Build, Developer ID-sign, notarize, and staple OpenInTerminal |
 
 All shell entrypoints live under `scripts/` and resolve paths from the repository
 root, including when invoked from another directory.
@@ -57,27 +57,18 @@ properly signed build for the full app and Finder extension.
 
 ### More features
 
-| Features | OpenInTerminal | OpenInTerminal-Lite & OpenInEditor-Lite |
-| --- | --- | --- |
-| Support Terminal, [iTerm](https://www.iterm2.com/), [Hyper](https://github.com/zeit/hyper), [Alacritty](https://github.com/jwilm/alacritty), [kitty](https://sw.kovidgoyal.net/kitty/), [Warp](https://www.warp.dev), [WezTerm](https://wezfurlong.org/wezterm/index.html), [Tabby](https://tabby.sh), [Ghostty](https://ghostty.org/), [cmux](https://github.com/manaflow-ai/cmux). | ✅ | ✅ |
-| Support TextEdit, Xcode, [Visual Studio Code](https://code.visualstudio.com/), [VSCode Insiders](https://code.visualstudio.com/insiders/), [Atom](https://atom.io/), [Sublime Text](https://www.sublimetext.com/), [VSCodium](https://github.com/VSCodium/vscodium), [BBEdit](https://www.barebones.com/products/bbedit/), [TextMate](https://macromates.com), [CotEditor](https://coteditor.com/), [MacVim](https://github.com/macvim-dev/macvim), [JetBrains](https://www.jetbrains.com/)(AppCode, CLion, GoLand, IntelliJ IDEA, PhpStorm, PyCharm, RubyMine, WebStorm, Android Studio, Fleet), [Typora](https://typora.io/), [Nova](https://nova.app/), [Cursor](https://cursor.sh/), [notepad--](https://github.com/cxasm/notepad--), [neovim](https://neovim.io/). | ✅ | ✅ |
-| Open in custom apps. (⚠️ Not all apps support.) | ✅ | ✅ |
-| Support English, Chinese, French, Russian, Italian, Spanish, Turkish, German and Korean | ✅ | ✅ |
-| GUI preferences | ✅ | ❌ |
-| Support keyboard shortcuts. | ✅ | ❌ |
-
-## OpenInTerminal vs OpenInTerminal-Lite 👀
-
-Wondering which one to choose? If you're all about fancy features and GUI settings, go for `OpenInTerminal`. But if you just want to open your terminal quickly and without fuss, `OpenInTerminal-Lite` is your buddy.
-
-I personally prefer `OpenInTerminal-Lite`. Why? It's a one-click wonder (while the other makes you click twice 😂) and it's more lightweight.
-
-Check **OpenInTerminal-Lite** Docs: [English](./Resources/README-Lite.md) | [中文](./Resources/README-Lite-zh.md) | [Deutsch](./Resources/README-Lite-de.md)
-
+| Features | OpenInTerminal |
+| --- | --- |
+| Support Terminal, [iTerm](https://www.iterm2.com/), [Hyper](https://github.com/zeit/hyper), [Alacritty](https://github.com/jwilm/alacritty), [kitty](https://sw.kovidgoyal.net/kitty/), [Warp](https://www.warp.dev), [WezTerm](https://wezfurlong.org/wezterm/index.html), [Tabby](https://tabby.sh), [Ghostty](https://ghostty.org/), [cmux](https://github.com/manaflow-ai/cmux). | ✅ |
+| Support TextEdit, Xcode, [Visual Studio Code](https://code.visualstudio.com/), [VSCode Insiders](https://code.visualstudio.com/insiders/), [Atom](https://atom.io/), [Sublime Text](https://www.sublimetext.com/), [VSCodium](https://github.com/VSCodium/vscodium), [BBEdit](https://www.barebones.com/products/bbedit/), [TextMate](https://macromates.com), [CotEditor](https://coteditor.com/), [MacVim](https://github.com/macvim-dev/macvim), [JetBrains](https://www.jetbrains.com/)(AppCode, CLion, GoLand, IntelliJ IDEA, PhpStorm, PyCharm, RubyMine, WebStorm, Android Studio, Fleet), [Typora](https://typora.io/), [Nova](https://nova.app/), [Cursor](https://cursor.sh/), [notepad--](https://github.com/cxasm/notepad--), [neovim](https://neovim.io/). | ✅ |
+| Open in custom apps. (⚠️ Not all apps support.) | ✅ |
+| Support English, Chinese, French, Russian, Italian, Spanish, Turkish, German and Korean | ✅ |
+| GUI preferences | ✅ |
+| Support keyboard shortcuts. | ✅ |
 
 ## Installation 🖥
 
-> ⚠️ **Important:** Signed builds are no longer provided for **OpenInTerminal**, **OpenInTerminal-Lite**, or **OpenInEditor-Lite**. Before using these apps, please either trust the unsigned binaries or sign them yourself. See the [Configuration](./Resources/README-Config.md) document for how to install and trust unsigned apps.
+> ⚠️ **Important:** Signed builds are no longer provided for **OpenInTerminal**. Before using the app, please either trust the unsigned binary or sign it yourself. See the [Configuration](./Resources/README-Config.md) document for how to install and trust unsigned apps.
 
 ```
 brew install --cask openinterminal

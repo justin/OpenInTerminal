@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# Build, Developer-ID sign, NOTARIZE and staple OpenInTerminal, OpenInTerminal-Lite
-# and OpenInEditor-Lite for distribution outside the Mac App Store.
+# Build, Developer-ID sign, notarize and staple OpenInTerminal
+# for distribution outside the Mac App Store.
 #
 # Unlike build-unsigned.sh (ad-hoc "Sign to Run Locally"), this produces artifacts
 # that pass Gatekeeper and satisfy Homebrew/cask's "signed AND notarized" rule.
 #
-# Strategy: build each app with signing turned off (so Xcode never demands a
+# Strategy: build the app with signing turned off (so Xcode never demands a
 # provisioning profile for the app-groups / sandbox capabilities), then re-sign
 # the finished bundles with a "Developer ID Application" certificate, enabling the
 # hardened runtime (--options runtime) and a secure timestamp (--timestamp) — both
@@ -56,12 +56,8 @@ HELPER_ENT="OpenInTerminalHelper/OpenInTerminalHelper.entitlements"
 NOTARY_PROFILE="${NOTARY_PROFILE:-OpenInTerminal-notary}"
 SKIP_NOTARIZE="${SKIP_NOTARIZE:-0}"
 
-# scheme:app-entitlements pairs
-TARGETS=(
-  "OpenInTerminal:OpenInTerminal/OpenInTerminal.entitlements"
-  "OpenInTerminal-Lite:OpenInTerminal-Lite/OpenInTerminal-Lite/OpenInTerminal-Lite.entitlements"
-  "OpenInEditor-Lite:OpenInEditor-Lite/OpenInEditor-Lite/OpenInEditor-Lite.entitlements"
-)
+scheme="OpenInTerminal"
+ent="OpenInTerminal/OpenInTerminal.entitlements"
 
 # --- Resolve the signing identity ------------------------------------------
 if [[ -z "${SIGN_ID:-}" ]]; then
@@ -115,35 +111,30 @@ sign() {  # $1 = .app bundle, $2 = app entitlements
 rm -rf "$EXPORT_DIR"
 mkdir -p "$EXPORT_DIR"
 
-for pair in "${TARGETS[@]}"; do
-  scheme="${pair%%:*}"
-  ent="${pair#*:}"
-  echo "==> Building $scheme (unsigned)"
-  xcodebuild \
-    -workspace "$WORKSPACE" \
-    -scheme "$scheme" \
-    -configuration "$CONFIG" \
-    -derivedDataPath "$DERIVED" \
-    -destination 'generic/platform=macOS' \
-    CODE_SIGNING_ALLOWED=NO \
-    build >/dev/null
+echo "==> Building $scheme (unsigned)"
+xcodebuild \
+  -workspace "$WORKSPACE" \
+  -scheme "$scheme" \
+  -configuration "$CONFIG" \
+  -derivedDataPath "$DERIVED" \
+  -destination 'generic/platform=macOS' \
+  CODE_SIGNING_ALLOWED=NO \
+  build >/dev/null
 
-  app="$PRODUCTS/$scheme.app"
+app="$PRODUCTS/$scheme.app"
 
-  echo "==> Developer-ID signing $scheme.app"
-  sign "$app" "$ent"
-  codesign --verify --deep --strict --verbose=2 "$app"
+echo "==> Developer-ID signing $scheme.app"
+sign "$app" "$ent"
+codesign --verify --deep --strict --verbose=2 "$app"
 
-  cp -R "$app" "$EXPORT_DIR/"
-  out="$EXPORT_DIR/$scheme.app"
+cp -R "$app" "$EXPORT_DIR/"
+out="$EXPORT_DIR/$scheme.app"
 
-  if [[ "$SKIP_NOTARIZE" == "1" ]]; then
-    echo "==> SKIP_NOTARIZE=1 — zipping signed (not notarized) $scheme"
-    ditto -c -k --sequesterRsrc --keepParent "$out" "$EXPORT_DIR/$scheme.zip"
-    echo "==> Exported $EXPORT_DIR/$scheme.zip (signed, NOT notarized)"
-    continue
-  fi
-
+if [[ "$SKIP_NOTARIZE" == "1" ]]; then
+  echo "==> SKIP_NOTARIZE=1 — zipping signed (not notarized) $scheme"
+  ditto -c -k --sequesterRsrc --keepParent "$out" "$EXPORT_DIR/$scheme.zip"
+  echo "==> Exported $EXPORT_DIR/$scheme.zip (signed, NOT notarized)"
+else
   # --- Notarize -------------------------------------------------------------
   # notarytool takes a zip (or dmg/pkg). Zip the signed .app, submit, wait.
   submit_zip="$EXPORT_DIR/$scheme-notarize.zip"
@@ -163,7 +154,7 @@ for pair in "${TARGETS[@]}"; do
   # Final distributable zip (contains the stapled app).
   ditto -c -k --sequesterRsrc --keepParent "$out" "$EXPORT_DIR/$scheme.zip"
   echo "==> Exported $EXPORT_DIR/$scheme.zip (signed + notarized + stapled)"
-done
+fi
 
 echo
 echo "Done. Artifacts are in ./$EXPORT_DIR :"

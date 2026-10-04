@@ -4,7 +4,7 @@
 
 On first launch, macOS may refuse to open the app — for example `"OpenInTerminal" is damaged and can't be opened`, or `cannot be opened because Apple cannot check it for malicious software`.
 
-1. Move the app (`OpenInTerminal.app`, `OpenInTerminal-Lite.app` or `OpenInEditor-Lite.app`) into `/Applications`.
+1. Move the app (`OpenInTerminal.app`) into `/Applications`.
 
 2. Remove the quarantine flag macOS attaches to downloaded or copied apps (repeat for each app, changing the name):
 

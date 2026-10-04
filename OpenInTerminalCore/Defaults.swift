@@ -12,14 +12,7 @@ import Foundation
 let GroupDefaults = UserDefaults(suiteName: Constants.Id.Group)
 
 /// current defaults
-public var Defaults: UserDefaults = {
-    if Bundle.main.bundleIdentifier == Constants.Id.OpenInTerminalLite ||
-        Bundle.main.bundleIdentifier == Constants.Id.OpenInEditorLite {
-        return UserDefaults.standard
-    } else {
-        return GroupDefaults ?? UserDefaults.standard
-    }
-}()
+public var Defaults: UserDefaults = GroupDefaults ?? UserDefaults.standard
 
 public class DefaultsKeys {
     fileprivate init() {}
@@ -56,10 +49,6 @@ public extension DefaultsKeys {
     static let onlyActivateShortcutsInFinder = DefaultsKey<Bool>("OnlyActivateShortcutsInFinder")
     static let neovimCommand = DefaultsKey<String>("NeovimCommand")
     static let gitkrakenCommand = DefaultsKey<String>("GitkrakenCommand")
-    
-    // for Lite
-    static let liteDefaultTerminal = DefaultsKey<String>("LiteDefaultTerminal")
-    static let liteDefaultEditor = DefaultsKey<String>("LiteDefaultEditor")
 }
 
 public extension UserDefaults {

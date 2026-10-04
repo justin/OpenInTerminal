@@ -8,7 +8,6 @@
 
 [English](../README.md) | [OpenInTerminal 中文说明](./README-zh.md) | [OpenInTerminal Türkçe](./README-tr.md) | [OpenInTerminal Deutsch](./README-de.md)
 
-[OpenInTerminal-Lite English](./README-Lite.md) | [OpenInTerminal-Lite 中文说明](./README-Lite-zh.md) | [OpenInTerminal-Lite Deutsch](./README-Lite-de.md)
 
 ## Verwendung 🚀
 
@@ -19,24 +18,14 @@
 
 ### Mehr Funktionen
 
-| Funktionen | OpenInTerminal | OpenInTerminal-Lite & OpenInEditor-Lite |
-| --- | --- | --- |
-| Unterstützt Terminal, [iTerm](https://www.iterm2.com/), [Hyper](https://github.com/zeit/hyper), [Alacritty](https://github.com/jwilm/alacritty) und [kitty](https://sw.kovidgoyal.net/kitty/). | ✅ | ✅ |
-| Unterstützt TextEdit, [Visual Studio Code](https://code.visualstudio.com/), [VSCode Insiders](https://code.visualstudio.com/insiders/), [Atom](https://atom.io/), [Sublime Text](https://www.sublimetext.com/), [VSCodium](https://github.com/VSCodium/vscodium), [BBEdit](https://www.barebones.com/products/bbedit/), [TextMate](https://macromates.com), [CotEditor](https://coteditor.com/), [MacVim](https://github.com/macvim-dev/macvim), [JetBrains](https://www.jetbrains.com/) (AppCode, CLion, GoLand, IntelliJ IDEA, PhpStorm, PyCharm, RubyMine, WebStorm), und [Typora](https://typora.io/). | ✅ | ✅ |
-| In benutzerdefinierten Programmen öffnen. (⚠️ Es werden nicht alle Apps unterstützt.) | ✅ | ✅ |
-| Unterstützt Englisch, Chinesisch, Französisch, Russisch, Italienisch, Spanisch and Türkisch | ✅ | ✅ |
-| GUI-Einstellungen | ✅ | ❌ |
-| Unterstützung von Tastaturkürzeln | ✅ | ❌ |
-
-## OpenInTerminal und OpenInTerminal-Lite (OpenInEditor-Lite) 👀
-
-Welches sollte man wählen? Beide Apps sind wie meine Kinder. Wenn Sie leistungsfähigere Funktionen und GUI-Einstellungen mögen, können Sie `OpenInTerminal` verwenden. Wenn Sie nur das Terminal schnell und zuverlässig öffnen müssen, können Sie `OpenInTerminal-Lite` verwenden.
-
-Ich bevorzuge `OpenInTerminal-Lite`, bei dem man nur einmal klicken muss, um die Funktion auszuführen (bei dem anderen muss man zweimal klicken 😂), und es ist leichtgewichtiger.
-
-Für `OpenInTerminal-Lite` Nutzer:
-
-Bitte lesen Sie das Dokument: [OpenInTerminal-Lite English](./README-Lite.md) | [OpenInTerminal-Lite 中文说明](./README-Lite-zh.md) | [OpenInTerminal-Lite Deutsch](./README-Lite-de.md)
+| Funktionen | OpenInTerminal |
+| --- | --- |
+| Unterstützt Terminal, [iTerm](https://www.iterm2.com/), [Hyper](https://github.com/zeit/hyper), [Alacritty](https://github.com/jwilm/alacritty) und [kitty](https://sw.kovidgoyal.net/kitty/). | ✅ |
+| Unterstützt TextEdit, [Visual Studio Code](https://code.visualstudio.com/), [VSCode Insiders](https://code.visualstudio.com/insiders/), [Atom](https://atom.io/), [Sublime Text](https://www.sublimetext.com/), [VSCodium](https://github.com/VSCodium/vscodium), [BBEdit](https://www.barebones.com/products/bbedit/), [TextMate](https://macromates.com), [CotEditor](https://coteditor.com/), [MacVim](https://github.com/macvim-dev/macvim), [JetBrains](https://www.jetbrains.com/) (AppCode, CLion, GoLand, IntelliJ IDEA, PhpStorm, PyCharm, RubyMine, WebStorm), und [Typora](https://typora.io/). | ✅ |
+| In benutzerdefinierten Programmen öffnen. (⚠️ Es werden nicht alle Apps unterstützt.) | ✅ |
+| Unterstützt Englisch, Chinesisch, Französisch, Russisch, Italienisch, Spanisch and Türkisch | ✅ |
+| GUI-Einstellungen | ✅ |
+| Unterstützung von Tastaturkürzeln | ✅ |
 
 ## Installation 🖥
 
@@ -78,10 +67,6 @@ Danke für Ihre Unterstützung!
 
 ## FAQ ❓
 
-<details><summary>1. Was ist der Unterschied zwischen OpenInTerminal und OpenInTerminal-Lite?</summary><br>
-<p>OpenInTerminal hat aktuell eine normale und eine lite Version. Wenn Sie leistungsfähigere Funktionen und GUI-Einstellungen mögen, können Sie `OpenInTerminal` verwenden. Wenn Sie nur das Terminal schnell und zuverlässig öffnen müssen, können Sie `OpenInTerminal-Lite` verwenden.</p>
-</details>
-
 <details><summary>2. Ich habe versehentlich auf <code>Nicht erlauben</code> geklickt.</summary><br>
 <p>Sie können den folgenden Befehl in einem Terminal ausführen. Dadurch werden die Berechtigungen in den Systemeinstellungen zurückgesetzt.</p>
 <br><code>tccutil reset AppleEvents com.justinwme.OpenInTerminal</code><br>
@@ -97,7 +82,6 @@ Danke für Ihre Unterstützung!
 
 <details><summary>5. OpenInTerminal Finder-Erweiterung funktioniert nicht.</summary><br>
 <p>Derzeit ist die Finder-Erweiterung vollständig von AppleScript abhängig, um unabhängig zu laufen. Daher ist es schwer, ihre Stabilität zu garantieren. Wenn Sie feststellen, dass die Finder-Erweiterung nicht richtig funktioniert, müssen Sie die <code>option(⌥)</code> Taste drücken, während Sie auf den Finder im Dock rechtsklicken und <code>Neu starten</code> auswählen.</p>
-<p>Wenn Ihr Mac-Modell etwas älter ist, so wie meines, schlage ich vor, dass Sie das Symbol im Kontextmenü in den Einstellungen entfernen. Wenn es immer noch häufig abstürzt, empfiehlt es sich, OpenInTerminal-Lite zu verwenden.</p>
 </details>
 
 <details><summary>6. OpenInTerminal funktioniert nicht wie erwartet</summary><br>

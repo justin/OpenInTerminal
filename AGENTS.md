@@ -2,13 +2,12 @@
 
 ## Project Structure & Module Organization
 
-Open `OpenInTerminal.xcworkspace` for all apps.
+Open `OpenInTerminal.xcworkspace` for the app and its supporting targets.
 
 - `OpenInTerminal/`: AppKit menu-bar app, preferences controllers, storyboards, and assets.
 - `OpenInTerminalCore/`: shared preferences, application discovery, launch logic, and scripting bridges.
 - `OpenInTerminalFinderExtension/`: sandboxed Finder Sync menus and actions.
 - `OpenInTerminalHelper/`: embedded login helper.
-- `OpenInTerminal-Lite/` and `OpenInEditor-Lite/`: standalone apps and Xcode projects.
 - `Tests/`: executable Swift regression harnesses; `scripts/`: build and test entrypoints.
 - `Resources/`: documentation and supplementary assets. Target-local `.xcassets` and `.lproj` directories contain icons and translations.
 
@@ -17,11 +16,11 @@ Open `OpenInTerminal.xcworkspace` for all apps.
 Use Xcode 27; the deployment target is macOS 13. Run `just` to list recipes.
 
 - `just build`: build the full app in Debug.
-- `just build Release OpenInTerminal-Lite`: select a configuration and scheme.
+- `just build Release`: build the Release configuration.
 - `just run`: build and launch; `just run --verify` also checks the process starts.
 - `just test`: build and run regression harnesses.
-- `just build-signed`: export Developer ID-signed apps without notarization.
-- `just build-unsigned`: export ad-hoc-signed apps.
+- `just build-signed`: export the Developer ID-signed app without notarization.
+- `just build-unsigned`: export the ad-hoc-signed app.
 - `just notarize`: build, sign, submit to Apple, and staple artifacts.
 
 Outputs belong in ignored `build/` and `export/` directories.
@@ -36,7 +35,7 @@ No Swift formatter or linter configuration is checked in. Use `just --fmt --chec
 
 Tests use standalone Swift executables with `precondition` assertions, not XCTest or Swift Testing. Place focused harnesses under `Tests/<Behavior>/main.swift` and wire them into `scripts/test.sh`. Use temporary UserDefaults suites; never reset real preferences.
 
-Add regression coverage for behavior changes. Build affected schemes, including both Lite apps for shared-core changes. Report interactive Finder, Automation, login, and older-OS checks separately from automated results; no coverage-percentage gate exists.
+Add regression coverage for behavior changes. Build the app and its embedded targets after shared-core changes. Report interactive Finder, Automation, login, and older-OS checks separately from automated results; no coverage-percentage gate exists.
 
 ## Commit & Pull Request Guidelines
 

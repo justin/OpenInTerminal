@@ -8,7 +8,6 @@
 
 [English](../README.md) | [OpenInTerminal 中文说明](./README-zh.md) | [OpenInTerminal Türkçe](./README-tr.md) | [OpenInTerminal Deutsch](./README-de.md)
 
-[OpenInTerminal-Lite English](./README-Lite.md) | [OpenInTerminal-Lite 中文说明](./README-Lite-zh.md) | [OpenInTerminal-Lite Deutsch](./README-Lite-de.md)
 
 ## Nasıl kullanılır 🚀
 
@@ -19,24 +18,14 @@
 
 ### Daha fazla özellik
 
-| Özellikler | OpenInTerminal | OpenInTerminal-Lite & OpenInEditor-Lite |
-| --- | --- | --- |
-| Terminal Desteği, [iTerm](https://www.iterm2.com/), [Hyper](https://github.com/zeit/hyper), [Alacritty](https://github.com/jwilm/alacritty) ve [kitty](https://sw.kovidgoyal.net/kitty/). | ✅ | ✅ |
-| TextEdit Desteği, [Visual Studio Code](https://code.visualstudio.com/), [VSCode Insiders](https://code.visualstudio.com/insiders/), [Atom](https://atom.io/), [Sublime Text](https://www.sublimetext.com/), [VSCodium](https://github.com/VSCodium/vscodium), [BBEdit](https://www.barebones.com/products/bbedit/), [TextMate](https://macromates.com), [CotEditor](https://coteditor.com/), [MacVim](https://github.com/macvim-dev/macvim) and [JetBrains](https://www.jetbrains.com/)(AppCode, CLion, GoLand, IntelliJ IDEA, PhpStorm, PyCharm, RubyMine, WebStorm). | ✅ | ✅ |
-| Özelleştirilmiş uygulamalarda aç. (⚠️Bütün uygulamar desteklenmemektedir.) | ✅ | ✅ |
-| Türkçe, İngilizce, Çince, Fransızca, Rusça, İtalyanca ve İspanyolca dil desteği. | ✅ | ✅ |
-| GUI ile özelleştirme | ✅ | ❌ |
-| Klavye kısayolu desteği. | ✅ | ❌ |
-
-## OpenInTerminal ve OpenInTerminal-Lite (OpenInEditor-Lite) 👀
-
-Hangisini seçmeliyim? İki sürüm de benim için değerli. Eğer daha güçlü özellikler ve GUI tercihlerini seviyorsanız, `OpenInTerminal`'i kullanın. Ancak sadece terminal açmak istiyorsanız `OpenInTerminal-Lite`, daha hızlı ve stabil şekilde çalışacaktır.
-
-Şahsen ben`OpenInTerminal-Lite`'ı tercih ediyorum. Terminalı sadece bir tıkla açabiliyorsunuz (diğeri ise iki tıkla bu işi yapıyor 😂) ve daha hafif bir yazılım olma vantajına sahip.
-
-`OpenInTerminal-Lite` kullanıcıları için:
-
-İlişkin döküman: [OpenInTerminal-Lite English](./README-Lite.md) | [OpenInTerminal-Lite 中文说明](./README-Lite-zh.md) | [OpenInTerminal-Lite Deutsch](./README-Lite-de.md)
+| Özellikler | OpenInTerminal |
+| --- | --- |
+| Terminal Desteği, [iTerm](https://www.iterm2.com/), [Hyper](https://github.com/zeit/hyper), [Alacritty](https://github.com/jwilm/alacritty) ve [kitty](https://sw.kovidgoyal.net/kitty/). | ✅ |
+| TextEdit Desteği, [Visual Studio Code](https://code.visualstudio.com/), [VSCode Insiders](https://code.visualstudio.com/insiders/), [Atom](https://atom.io/), [Sublime Text](https://www.sublimetext.com/), [VSCodium](https://github.com/VSCodium/vscodium), [BBEdit](https://www.barebones.com/products/bbedit/), [TextMate](https://macromates.com), [CotEditor](https://coteditor.com/), [MacVim](https://github.com/macvim-dev/macvim) and [JetBrains](https://www.jetbrains.com/)(AppCode, CLion, GoLand, IntelliJ IDEA, PhpStorm, PyCharm, RubyMine, WebStorm). | ✅ |
+| Özelleştirilmiş uygulamalarda aç. (⚠️Bütün uygulamar desteklenmemektedir.) | ✅ |
+| Türkçe, İngilizce, Çince, Fransızca, Rusça, İtalyanca ve İspanyolca dil desteği. | ✅ |
+| GUI ile özelleştirme | ✅ |
+| Klavye kısayolu desteği. | ✅ |
 
 ## Nasıl Yüklenir 🖥
 
@@ -78,10 +67,6 @@ Desteğiniz için teşekkürler!
 
 ## Sık Sorulan Sorular ❓
 
-<details><summary>1. OpenInTerminal ile OpenInTerminal-Lite? arasındaki fark nedir?</summary><br>
-<p>OpenInTerminal güncel olarak iki versiyona sahiptir: Normal ve Lite.  Eğer daha güçlü özellikler ve GUI tercihlerini seviyorsanız, OpenInTerminal'ı kullanın. Ancak sadece terminal açmak istiyorsanız `OpenInTerminal-Lite`, daha hızlı ve stabil şekilde çalışacaktır.</p>
-</details>
-
 <details><summary>2. Yanlışlıkla <code>Kabul Etme</code>  butonuna tıkladım.</summary><br>
 <p>Aşağıda verilen kodu terminalde çalıştırın. Bu sayede Sistem Tercihlerindeki uygulamaya dair izinler sıfırlanacaktır.</p>
 <br><code>tccutil reset AppleEvents com.justinwme.OpenInTerminal</code><br>
@@ -97,7 +82,6 @@ Desteğiniz için teşekkürler!
 
 <details><summary>5. OpenInTerminal Finder uzantısı çalışmıyor.</summary><br>
 <p>Şimdilik Finder uzantıları bağımsız çalışabilmek için AppleScript'e bağlı. Bu sebepten ötürü stabil çalışmasını garanti etmek pek mümkün değil. Finder uzantısının düzgün çalışmadığını fark ettiğinizde, <code>Option(⌥)</code> tuşunu basılı tutup Finder'a sağ tıklama yaptıktan sonra, <code>Relaunch</code>'u seçin.</p>
-<p>Eğer Mac'niz benimkisi gibi eskiyse uygulama ikonunu Tercihler menüsünden kapatmanızı tavsiye ediyorum. Eğer hala sıkça çöküyorsa OpenInTerminal-Lite kullanılması daha iyi olacaktır.</p>
 </details>
 
 <details><summary>6. OpenInTerminal beklediğim gibi çalışmıyor</summary><br>
