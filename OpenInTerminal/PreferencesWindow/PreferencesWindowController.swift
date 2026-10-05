@@ -8,6 +8,19 @@
 
 import Cocoa
 
+class PreferencesWindow: NSWindow {
+
+    override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        if event.modifierFlags.intersection([.command, .control, .option, .shift]) == .command,
+           event.charactersIgnoringModifiers?.lowercased() == "w" {
+            self.performClose(nil)
+            return true
+        }
+        return super.performKeyEquivalent(with: event)
+    }
+
+}
+
 class PreferencesWindowController: NSWindowController {
 
     override func windowDidLoad() {

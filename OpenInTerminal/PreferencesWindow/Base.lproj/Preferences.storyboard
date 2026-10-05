@@ -11,7 +11,7 @@
             <objects>
                 <customObject id="ov8-72-M4k" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <windowController id="oOf-8k-ODW" customClass="PreferencesWindowController" customModule="OpenInTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Preferences" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="5f3-UK-Rft">
+                    <window key="window" title="Preferences" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="5f3-UK-Rft" customClass="PreferencesWindow" customModule="OpenInTerminal" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="425" y="461" width="350" height="270"/>
