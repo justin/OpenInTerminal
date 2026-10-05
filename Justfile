@@ -26,7 +26,7 @@ build-unsigned:
 notarize:
     SKIP_NOTARIZE=0 ./scripts/build-signed.sh
 
-# Release X.Y.Z (or vX.Y.Z); use --resume after an interrupted release.
+# Bump version X.Y.Z (or vX.Y.Z) and build number, then commit and tag.
 [positional-arguments]
-release version *options:
+release version:
     python3 scripts/release.py "$@"

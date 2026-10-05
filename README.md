@@ -29,7 +29,7 @@ The root `Justfile` provides these shortcuts (run `just` to list them):
 | `just build-signed` | Export Developer ID-signed app and ZIP without notarization |
 | `just build-unsigned` | Export an ad-hoc-signed app |
 | `just notarize` | Build, Developer ID-sign, notarize, and staple OpenInTerminal |
-| `just release X.Y.Z` | Commit/tag a version, notarize, publish to GitHub, and update `justin/tap` |
+| `just release X.Y.Z` | Bump version/build numbers, commit, and tag the release |
 
 All shell entrypoints live under `scripts/` and resolve paths from the repository
 root, including when invoked from another directory.
@@ -49,41 +49,21 @@ exports signed builds without submitting them to Apple. Ad-hoc builds from
 `scripts/build-unsigned.sh` cannot authorize the team-prefixed shared app group; use a
 properly signed build for the full app and Finder extension.
 
-### Publishing this fork
+### Preparing a release
 
-Run `just release X.Y.Z` (or `just release vX.Y.Z`) from a clean `master` checkout.
-The version must be newer than the current version. The command updates
-`MARKETING_VERSION` for all four targets and increments the highest
-`CURRENT_PROJECT_VERSION` by one, then creates a signed release commit and tag.
-It builds a universal Release app, signs, notarizes, and staples it before pushing
-`master` and the tag to `justin/OpenInTerminal`. This push includes any unpublished
-commits already on `master`.
+Run `just release X.Y.Z` (or `just release vX.Y.Z`) with Python 3.9+ from a clean checkout.
+The version must be newer than every current target version. The command updates
+`MARKETING_VERSION` for all four targets in Debug and Release and sets every
+`CURRENT_PROJECT_VERSION` to the highest existing build number plus one.
 
-The command publishes `OpenInTerminal.zip` in a GitHub release with generated
-notes, downloads and verifies the artifact, then creates or updates
-`Casks/openinterminal.rb` in `justin/tap` with its SHA-256 checksum. It checks cask
-style and pushes a signed commit directly to the tap's default branch using a
-temporary clone; your existing tap checkout is unaffected.
+The command creates a `Release vX.Y.Z` commit and an annotated `vX.Y.Z` tag,
+honoring your Git signing configuration. Existing local tags are rejected before
+any changes. Build, archive, sign, and notarize manually in Xcode; pushing,
+GitHub releases, and Homebrew updates are also handled manually.
 
-Prerequisites: Xcode 27, Python 3.9+, GitHub CLI (`gh auth login`) with write access
-to both repositories, Homebrew, configured Git commit/tag signing, and the
-Developer ID certificate and notary keychain profile described above.
-`SIGN_ID` and `NOTARY_PROFILE` are honored; `SKIP_NOTARIZE` is always overridden
-for releases. No upstream Homebrew cask PR is created.
-
-If a step fails after the release commit, fix the cause and run
-`just release X.Y.Z --resume` with that commit still at `HEAD` on `master`.
-The command preserves local commits/tags on failure. Resume rebuilds when no
-published release exists; otherwise it verifies the existing uploaded artifact
-and retries the tap update without replacing release assets. If GitHub left an
-unfinished draft, inspect and remove that draft before resuming. If signing the
-release commit failed, inspect the staged project version change and either
-finish the signed `Release vX.Y.Z` commit or restore that change before retrying.
-Concurrent remote changes cause a normal push rejection; tags are never forced.
-
-After publication, install with `brew install --cask justin/tap/openinterminal`.
-Run `python3 -B Tests/Release/test_release.py` for isolated release-script checks
-without signing, notarizing, or publishing anything.
+If committing or tagging fails, inspect the project changes, latest commit, and
+tags before retrying. Complete any remaining commit or tag manually; the command
+does not roll back changes or support resuming a partially completed release.
 
 ## How to use 🚀
 

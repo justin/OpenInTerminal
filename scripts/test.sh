@@ -2,7 +2,6 @@
 set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
-python3 -B Tests/Release/test_release.py
 xcodebuild -project OpenInTerminal.xcodeproj -scheme OpenInTerminal \
   -configuration Debug -derivedDataPath build -destination 'generic/platform=macOS' build
 PRODUCTS="$ROOT_DIR/build/Build/Products/Debug"

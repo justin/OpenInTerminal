@@ -1,28 +1,19 @@
 #!/usr/bin/env python3
-"""Publish a notarized release and update Justin's Homebrew cask."""
+"""Update all target versions and build numbers, then commit and tag the release."""
 
 import argparse
-import hashlib
-import json
-import os
-import plistlib
 import re
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-REPO = "justin/OpenInTerminal"
-TAP = "justin/tap"
 PROJECT = Path("OpenInTerminal.xcodeproj/project.pbxproj")
-ASSET = "OpenInTerminal.zip"
 
 
-def run(*args, cwd=ROOT, capture=False, env=None):
-    result = subprocess.run(args, cwd=cwd, check=True, text=True,
-                            stdout=subprocess.PIPE if capture else None, env=env)
-    return result.stdout.strip() if capture else None
+def git(*args):
+    return subprocess.run(("git", *args), cwd=ROOT, check=True, text=True,
+                          stdout=subprocess.PIPE).stdout.strip()
 
 
 def require(condition, message):
@@ -54,152 +45,30 @@ def bump_version(text, version):
     return text, build
 
 
-def verify_app(app, version, build):
-    # Check the distributed host, extension, helper, and shared framework.
-    plists = [app / "Contents/Info.plist"]
-    for pattern in ("**/*.appex/Contents/Info.plist", "**/*.app/Contents/Info.plist",
-                    "**/*.framework/Resources/Info.plist"):
-        plists.extend(app.glob(pattern))
-    require(len(plists) >= 4, "Export is missing an embedded bundle.")
-    for path in plists:
-        with path.open("rb") as source:
-            info = plistlib.load(source)
-        require(info["CFBundleShortVersionString"] == version and info["CFBundleVersion"] == build,
-                f"Incorrect version/build in {path}")
-    run("codesign", "--verify", "--deep", "--strict", str(app))
-    run("xcrun", "stapler", "validate", str(app))
-    run("spctl", "-a", "-t", "exec", "-vv", str(app))
-
-
-def cask_text(version, checksum):
-    return f'''cask "openinterminal" do
-  version "{version}"
-  sha256 "{checksum}"
-
-  url "https://github.com/{REPO}/releases/download/v#{{version}}/{ASSET}"
-  name "OpenInTerminal"
-  desc "Open terminals and editors from Finder"
-  homepage "https://github.com/{REPO}"
-
-  depends_on macos: :sonoma
-
-  app "OpenInTerminal.app"
-end
-'''
-
-
-def release(version, resume):
+def release(version):
     version_number(version)
     tag = f"v{version}"
-    require(not run("git", "status", "--porcelain", capture=True), "Commit or stash changes first.")
-    require(run("git", "branch", "--show-current", capture=True) == "master",
-            "Release from master.")
-    remote = run("git", "remote", "get-url", "--push", "origin", capture=True)
-    require(remote in (f"git@github.com:{REPO}.git", f"https://github.com/{REPO}.git"),
-            f"origin must point to {REPO}.")
-    run("gh", "auth", "status")
-    run("git", "fetch", "origin", "master")
-    run("git", "merge-base", "--is-ancestor", "origin/master", "HEAD")
-    local_tag = run("git", "tag", "--list", tag, capture=True)
-    remote_tag = run("git", "ls-remote", "--tags", "origin", f"refs/tags/{tag}", capture=True)
-    text = (ROOT / PROJECT).read_text()
-    if resume:
-        versions, builds = project_versions(text)
-        require(set(versions) == {version} and len(set(builds)) == 1,
-                "Resume requires the release version and build in every target.")
-        require(run("git", "log", "-1", "--format=%s", capture=True) == f"Release {tag}",
-                "Resume requires the release commit at HEAD.")
-        build = builds[0]
-        if local_tag:
-            require(run("git", "rev-parse", f"{tag}^{{commit}}", capture=True) ==
-                    run("git", "rev-parse", "HEAD", capture=True), "Release tag must point to HEAD.")
-        require(not remote_tag or (local_tag and remote_tag.split()[0] ==
-                run("git", "rev-parse", f"refs/tags/{tag}", capture=True)),
-                "Remote tag differs from the local tag.")
-    else:
-        require(not local_tag and not remote_tag, "Tag already exists; use --resume only for this release.")
-        text, build = bump_version(text, version)
-
-    # Listing failures must stop the release, never be mistaken for a missing release.
-    pages = run("gh", "api", "--paginate", "--slurp", f"repos/{REPO}/releases", capture=True)
-    existing = next((item for page in json.loads(pages) for item in page if item["tag_name"] == tag), None)
-    require(not existing or resume, "GitHub release already exists.")
-    require(not existing or (local_tag and remote_tag),
-            "A published release requires matching local and remote tags.")
-    require(not existing or (not existing["draft"] and not existing["prerelease"]),
-            "An unfinished draft/prerelease exists. Inspect it on GitHub before resuming.")
-
-    with tempfile.TemporaryDirectory(prefix="oit-release-") as temporary:
-        temporary = Path(temporary)
-        tap = temporary / "tap"
-        run("gh", "repo", "clone", TAP, str(tap))
-        if not resume:
-            (ROOT / PROJECT).write_text(text)
-            run("git", "add", str(PROJECT))
-            run("git", "commit", "-S", "-m", f"Release {tag}")
-        if not local_tag:
-            run("git", "tag", "-s", tag, "-m", f"OpenInTerminal {tag}")
-        release_commit = run("git", "rev-parse", "HEAD", capture=True)
-
-        if not existing:
-            run("bash", "scripts/build-signed.sh", env={**os.environ, "SKIP_NOTARIZE": "0"})
-            verify_app(ROOT / "export/OpenInTerminal.app", version, build)
-            require(not run("git", "status", "--porcelain", capture=True),
-                    "Working tree changed during the build; refusing to publish.")
-            require(run("git", "rev-parse", "HEAD", capture=True) == release_commit and
-                    run("git", "rev-parse", f"{tag}^{{commit}}", capture=True) == release_commit,
-                    "HEAD or the release tag changed during the build; refusing to publish.")
-            # Publish the branch and exact tag together, only after notarization succeeds.
-            run("git", "push", "--atomic", "origin", f"{release_commit}:refs/heads/master", f"refs/tags/{tag}")
-            run("gh", "release", "create", tag, str(ROOT / "export" / ASSET), "--repo", REPO,
-                "--verify-tag", "--title", f"OpenInTerminal {tag}", "--generate-notes", "--latest")
-
-        downloaded = temporary / "download"
-        run("gh", "release", "download", tag, "--repo", REPO, "--pattern", ASSET, "--dir", str(downloaded))
-        archive = downloaded / ASSET
-        checksum = hashlib.sha256(archive.read_bytes()).hexdigest()
-        if not existing:
-            require(checksum == hashlib.sha256((ROOT / "export" / ASSET).read_bytes()).hexdigest(),
-                    "Downloaded release checksum differs from the notarized export.")
-        unpacked = temporary / "unpacked"
-        run("ditto", "-x", "-k", str(archive), str(unpacked))
-        verify_app(unpacked / "OpenInTerminal.app", version, build)
-        cask = tap / "Casks/openinterminal.rb"
-        cask.parent.mkdir(exist_ok=True)
-        if cask.exists():
-            contents = cask.read_text()
-            require(f"https://github.com/{REPO}/releases/download/" in contents,
-                    "Existing cask does not point to this fork.")
-            current = re.search(r'^  version "([0-9.]+)"$', contents, re.MULTILINE)
-            require(current and version_number(current[1]) <= version_number(version),
-                    "Refusing to downgrade the tap.")
-            for key, value in (("version", version), ("sha256", checksum)):
-                contents, count = re.subn(rf'^  {key} "[^"\n]+"$', f'  {key} "{value}"',
-                                          contents, flags=re.MULTILINE)
-                require(count == 1, f"Expected one {key} field in the cask.")
-        else:
-            contents = cask_text(version, checksum)
-        cask.write_text(contents)
-        run("brew", "style", str(cask), cwd=tap)
-        if run("git", "status", "--porcelain", capture=True, cwd=tap):
-            run("git", "add", "Casks/openinterminal.rb", cwd=tap)
-            run("git", "commit", "-S", "-m", f"Update OpenInTerminal to {version}", cwd=tap)
-            run("git", "push", "origin", "HEAD", cwd=tap)
-    print(f"Released https://github.com/{REPO}/releases/tag/{tag}")
-    print("Install with: brew install --cask justin/tap/openinterminal")
+    require(not git("status", "--porcelain"), "Commit or stash changes first.")
+    require(not git("tag", "--list", tag), f"Tag {tag} already exists.")
+    project = ROOT / PROJECT
+    text, build = bump_version(project.read_text(), version)
+    project.write_text(text)
+    git("add", str(PROJECT))
+    git("commit", "-m", f"Release {tag}")
+    git("tag", "-a", tag, "-m", f"OpenInTerminal {tag}")
+    print(f"Committed and tagged {tag} (build {build}).")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("version", help="X.Y.Z or vX.Y.Z")
-    parser.add_argument("--resume", action="store_true", help="Resume at the existing release commit")
     args = parser.parse_args()
     try:
-        release(args.version.removeprefix("v"), args.resume)
+        release(args.version.removeprefix("v"))
     except (ValueError, OSError, subprocess.CalledProcessError) as error:
-        print(f"Release stopped: {error}", file=sys.stderr)
-        print("No automatic rollback was performed. Inspect Git status and GitHub; after fixing the\n"
-              "failure, use --resume if the release commit exists. Never move a published tag.", file=sys.stderr)
+        print(f"Release preparation failed: {error}", file=sys.stderr)
+        print("Inspect Git status, the latest commit, and tags before retrying; "
+              "no automatic rollback was performed.", file=sys.stderr)
         return 1
     return 0
 
