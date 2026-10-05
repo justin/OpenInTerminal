@@ -135,7 +135,7 @@ class FinderSync: FIFinderSync {
         let itemsMenu = useSubmenu ? NSMenu(title: "") : menu
 
         if let terminal = DefaultsManager.shared.defaultTerminal {
-            let terminalTitle = terminal.name
+            let terminalTitle = NSLocalizedString("menu.open_in", comment: "Open in ") + terminal.name
             let openInTerminalItem = NSMenuItem(title: terminalTitle,
                                                 action: #selector(openDefaultTerminal),
                                                 keyEquivalent: "")
@@ -145,7 +145,7 @@ class FinderSync: FIFinderSync {
         }
 
         if let editor = DefaultsManager.shared.defaultEditor {
-            let editorTitle = editor.name
+            let editorTitle = NSLocalizedString("menu.open_in", comment: "Open in ") + editor.name
             let openInEditorItem = NSMenuItem(title: editorTitle,
                                                 action: #selector(openDefaultEditor),
                                                 keyEquivalent: "")
@@ -176,7 +176,7 @@ class FinderSync: FIFinderSync {
         let itemsMenu = useSubmenu ? NSMenu(title: "") : menu
 
         customApps.forEach { app in
-            let itemTitle = app.name
+            let itemTitle = NSLocalizedString("menu.open_in", comment: "Open in ") + app.name
             let menuItem = NSMenuItem(title: itemTitle,
                                       action: #selector(customMenuItemClicked),
                                       keyEquivalent: "")
