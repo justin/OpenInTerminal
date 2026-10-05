@@ -30,7 +30,7 @@
         <!--Tab View Controller-->
         <scene sceneID="gky-gQ-lB6">
             <objects>
-                <tabViewController selectedTabViewItemIndex="0" tabStyle="toolbar" id="yBJ-jB-chi" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="0" tabStyle="toolbar" id="yBJ-jB-chi" customClass="PreferencesTabViewController" customModule="OpenInTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem identifier="" image="gearshape" catalog="system" id="87n-1W-bcb"/>
                         <tabViewItem image="slider.horizontal.3" catalog="system" id="nuJ-iU-x7x"/>

@@ -8,6 +8,10 @@ xcodebuild -project OpenInTerminal.xcodeproj -scheme OpenInTerminal \
 PRODUCTS="$ROOT_DIR/build/Build/Products/Debug"
 TEST_DIR="$(mktemp -d "${TMPDIR:-/tmp}/oit-finder-tests.XXXXXX")"
 trap 'rm -rf "$TEST_DIR"' EXIT
+xcrun swiftc OpenInTerminal/PreferencesWindow/PreferencesTabViewController.swift \
+  Tests/PreferencesResizing/main.swift -o "$TEST_DIR/PreferencesResizingTests"
+"$TEST_DIR/PreferencesResizingTests"
+
 xcrun swiftc -F "$PRODUCTS" -framework OpenInTerminalCore -framework FinderSync \
   -Xlinker -rpath -Xlinker "$PRODUCTS" \
   OpenInTerminalFinderExtension/FinderSync.swift Tests/FinderMenu/main.swift \
