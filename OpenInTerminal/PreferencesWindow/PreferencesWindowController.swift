@@ -12,6 +12,9 @@ class PreferencesWindowController: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
+
+        self.window?.toolbarStyle = .preference
+        self.window?.toolbar?.displayMode = .iconAndLabel
     }
     
 }
